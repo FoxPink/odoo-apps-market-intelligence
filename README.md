@@ -28,7 +28,9 @@ Scrape, analyze, and export **Odoo Apps Store** data with filters. Find market g
 
 ## Features
 
-- Filter by keyword, Odoo version (10.0-19.0), category (18 categories), price (Free/Paid)
+- Filter by keyword, Odoo version (10.0-19.0), category (18 categories), price (Free/Paid), and author name
+- Sort by downloads, estimated revenue, or rating
+- Free-only mode: override price filter to show only free apps
 - Extract title, technical name, author, price, rating, purchases, license, dependencies, lines of code
 - **Killer feature**: sort by `estimatedRevenue` to find goldmine modules
 - Cheerio-based = fast, cheap, no browser
@@ -43,6 +45,9 @@ curl -X POST https://api.apify.com/v2/acts/foxpink~odoo-apps-market-intelligence
     "searchKeyword": "payment",
     "odooVersion": "18.0",
     "filterType": "Paid",
+    "freeAppsOnly": false,
+    "authorSearch": "VentorTech",
+    "sortBy": "revenue",
     "maxItems": 100
   }' \
   "https://api.apify.com/v2/acts/foxpink~odoo-apps-market-intelligence/runs?token=YOUR_API_TOKEN"
