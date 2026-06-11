@@ -1,40 +1,73 @@
-﻿# Odoo Apps Store Market Intelligence
+# Odoo Apps Store Market Intelligence
 
-<p align="center">
-  <a href="https://apify.com/foxpink/odoo-apps-market-intelligence">
-    <img src="https://img.shields.io/badge/Run_on_Apify_Cloud-0.01_per_1k_results-FF7754?style=for-the-badge&logo=apify" alt="Run on Apify Cloud">
-  </a>
-</p>
+[![Apify Marketplace](https://img.shields.io/badge/Apify-Marketplace-FF7754)](https://apify.com/foxpink/odoo-apps-market-intelligence)
+[![GitHub](https://img.shields.io/badge/GitHub-Repo-181717)](https://github.com/FoxPink/odoo-apps-market-intelligence)
 
-<p align="center">
-  <a href="https://apify.com/foxpink/odoo-apps-market-intelligence">
-    <img src="https://img.shields.io/badge/Apify-Store-FF7754?style=flat-square" alt="Apify Store">
-  </a>
-  <img src="https://img.shields.io/badge/license-MIT-green?style=flat-square" alt="MIT">
-</p>
-
-Scrape, analyze, and export **Odoo Apps Store** data with filters. Find market gaps, estimate competitor revenue, and discover profitable niches — all at **$0.01/1k results**.
+> Scrape, analyze, and export Odoo Apps Store data with filters. Find market gaps, estimate competitor revenue, and discover profitable niches.
 
 ---
 
-## Why This Actor?
-
-| Problem | Solution |
-|---------|----------|
-| Manual Odoo Store research takes hours | Bulk scrape 1000s of apps in minutes |
-| Can't estimate competitor revenue | `estimatedRevenue = price x purchases` |
-| No easy CSV export | 5 API endpoints ready |
-| Browser scrapers are slow & expensive | Cheerio = 10x faster, minimal compute |
-
 ## Features
 
-- Filter by keyword, Odoo version (10.0-19.0), category (18 categories), price (Free/Paid), and author name
-- Sort by downloads, estimated revenue, or rating
-- Free-only mode: override price filter to show only free apps
-- Extract title, technical name, author, price, rating, purchases, license, lines of code, supported versions
-- **Killer feature**: sort by `estimatedRevenue` to find goldmine modules
-- Cheerio-based = fast, cheap, no browser
-- Export JSON, CSV, filtered views
+- **Browse & Filter** — Search by keyword, Odoo version, category, price (Free/Paid), and author
+- **Smart Sorting** — Sort by downloads, estimated revenue, or rating
+- **Free-Only Mode** — Override price filter to show only free apps
+- **Rich Data** — Title, author, price, rating, purchases, technical name, license, lines of code, supported versions
+- **Killer Feature: Estimated Revenue** — `price × purchases` — sort by this to find goldmine modules
+- **CSV/JSON Export** — 6 API endpoints ready for Excel or ETL pipelines
+- **Zero DOM** — Cheerio-based, no browser, fast and cheap
+
+## Use Cases
+
+| Who | Why |
+|-----|-----|
+| Odoo Developers | Find high-demand, low-competition niches |
+| Odoo Partners | Track competitor pricing and market share |
+| Investors | Estimate module revenue before acquisition |
+| Product Managers | Validate new module ideas with real market data |
+
+## Input
+
+| Field | Type | Default | Description |
+|-------|------|---------|-------------|
+| `searchKeyword` | string | `""` | Search for specific apps |
+| `odooVersion` | enum | All | Filter by Odoo version (10.0–19.0) |
+| `category` | enum | All | Filter by category (18 categories) |
+| `filterType` | enum | All | Free, Paid, or All |
+| `freeAppsOnly` | boolean | `false` | Override: show only free apps (ignores filterType) |
+| `authorSearch` | string | `""` | Filter by developer/author name |
+| `sortBy` | enum | — | Sort order: `downloads`, `revenue`, or `rating` |
+| `maxItems` | integer | `500` | Max apps to scrape (max 5000) |
+| `scrapeDetails` | boolean | `true` | Visit detail pages for richer data |
+
+## Output
+
+Each record:
+
+| Field | Type | Example |
+|-------|------|---------|
+| `title` | string | "Shopify Odoo Connector" |
+| `technicalName` | string | "shopify_ept" |
+| `author` | string | "Emipro Technologies" |
+| `category` | string | "eCommerce" |
+| `price` | number | 465.06 |
+| `currency` | string | "EUR" |
+| `purchases` | integer | 2301 |
+| `estimatedRevenue` | number | 1070103.06 |
+| `rating` | number | 4.8 |
+| `ratingCount` | integer | 270 |
+| `latestVersion` | string | "17.0" |
+| `supportedVersions` | array | ["16.0","17.0","18.0"] |
+| `license` | string | "OPL-1" |
+| `linesOfCode` | integer | 14329 |
+| `summary` | string | "Shopify Odoo Connector" |
+| `appUrl` | string | "https://apps.odoo.com/..." |
+
+Plus a `summary` entry with aggregate stats (total, avg price, estimated total revenue).
+
+## Pricing
+
+**$0.01 per 1,000 results.** One result = one app record. Lightweight Cheerio scraper keeps compute costs minimal.
 
 ## Quick Start
 
@@ -48,34 +81,29 @@ curl -X POST https://api.apify.com/v2/acts/foxpink~odoo-apps-market-intelligence
     "freeAppsOnly": false,
     "authorSearch": "VentorTech",
     "sortBy": "revenue",
-    "maxItems": 100
+    "maxItems": 100,
+    "scrapeDetails": true
   }' \
   "https://api.apify.com/v2/acts/foxpink~odoo-apps-market-intelligence/runs?token=YOUR_API_TOKEN"
 ```
 
-## Sample Output
+## Compatibility
 
-| Field | Example |
-|-------|---------|
-| title | Shopify Odoo Connector |
-| technicalName | shopify_ept |
-| author | Emipro Technologies |
-| price | 465.06 |
-| purchases | 2,301 |
-| estimatedRevenue | 1,070,103.06 |
-| rating | 5.0 |
-| ratingCount | 270 |
-| latestVersion | 17.0 |
-| supportedVersions | 16.0, 17.0, 18.0 |
-| license | OPL-1 |
-| linesOfCode | 14,329 |
+- 100% Node.js (18+)
+- No browser, no headless, no DOM
+- CheerioCrawler — fast, low memory
+- ESM (ECMAScript Modules)
 
-## Pricing
+## MCP / AI Agent Usage
 
-**$0.01 per 1,000 results.** One result = one app record. Lightweight Cheerio scraper keeps compute costs minimal.
-
----
-
-<p align="center">
-  Built by <a href="https://apify.com/foxpink">Nguyen Anh Duy</a> — FoxPink Studio
-</p>
+```json
+{
+  "mcpServers": {
+    "apify": {
+      "command": "npx",
+      "args": ["-y", "@apify/mcp-server"],
+      "env": { "APIFY_TOKEN": "YOUR_API_TOKEN" }
+    }
+  }
+}
+```
