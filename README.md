@@ -31,7 +31,7 @@ Scrape, analyze, and export **Odoo Apps Store** data with filters. Find market g
 - Filter by keyword, Odoo version (10.0-19.0), category (18 categories), price (Free/Paid), and author name
 - Sort by downloads, estimated revenue, or rating
 - Free-only mode: override price filter to show only free apps
-- Extract title, technical name, author, price, rating, purchases, license, dependencies, lines of code
+- Extract title, technical name, author, price, rating, purchases, license, lines of code, supported versions
 - **Killer feature**: sort by `estimatedRevenue` to find goldmine modules
 - Cheerio-based = fast, cheap, no browser
 - Export JSON, CSV, filtered views
