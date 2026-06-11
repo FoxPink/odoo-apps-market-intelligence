@@ -16,6 +16,8 @@
 - **Killer Feature: Estimated Revenue** — `price × purchases` — sort by this to find goldmine modules
 - **CSV/JSON Export** — 6 API endpoints ready for Excel or ETL pipelines
 - **Zero DOM** — Cheerio-based, no browser, fast and cheap
+- **User Reviews** — scrapes and analyzes user reviews with rating distribution, sentiment trends, and recent feedback.
+- **Version Tracking** — tracks supported Odoo versions per module and highlights version upgrade/deprecation patterns.
 
 ## Use Cases
 
