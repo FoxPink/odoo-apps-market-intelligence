@@ -1,46 +1,37 @@
-# Odoo Apps Store Market Intelligence
+# Odoo Apps Store Scraper & Market Intelligence Engine
 
 [![Apify Marketplace](https://img.shields.io/badge/Apify-Marketplace-FF7754)](https://apify.com/foxpink/odoo-apps-market-intelligence)
 [![GitHub](https://img.shields.io/badge/GitHub-Repo-181717)](https://github.com/FoxPink/odoo-apps-market-intelligence)
 
-> Scrape, analyze, and export Odoo Apps Store data with filters. Find market gaps, estimate competitor revenue, and discover profitable niches.
+> Scrape, analyze, and export Odoo Apps Store data with filters. **Version comparison across Odoo 15-18 included.** Find market gaps, estimate competitor revenue, and discover profitable niches.
 
 ---
 
 ## Features
 
-- **Browse & Filter** — Search by keyword, Odoo version, category, price (Free/Paid), and author
+- **Browse & Filter** — Search by keyword, Odoo version (10.0-19.0), category (18 categories), price (Free/Paid), and author
 - **Smart Sorting** — Sort by downloads, estimated revenue, or rating
-- **Free-Only Mode** — Override price filter to show only free apps
-- **Rich Data** — Title, author, price, rating, purchases, technical name, license, lines of code, supported versions
-- **Killer Feature: Estimated Revenue** — `price × purchases` — sort by this to find goldmine modules
-- **CSV/JSON Export** — 6 API endpoints ready for Excel or ETL pipelines
+- **Estimated Revenue** — `price x purchases` — find goldmine modules
+- **Version Comparison (new)** — Compare price, screenshots, dependencies, and reviews across Odoo versions 15.0-18.0 for each app
+- **Rich Detail Data** — Technical name, license, lines of code, supported versions, screenshots, user reviews, last updated, created on
+- **Competitor Matrix** — Category breakdown with revenue comparison and top authors ranking
+- **Version Adoption Trends** — Distribution of apps across Odoo versions
 - **Zero DOM** — Cheerio-based, no browser, fast and cheap
-- **User Reviews** — scrapes and analyzes user reviews with rating distribution, sentiment trends, and recent feedback.
-- **Version Tracking** — tracks supported Odoo versions per module and highlights version upgrade/deprecation patterns.
-
-## Use Cases
-
-| Who | Why |
-|-----|-----|
-| Odoo Developers | Find high-demand, low-competition niches |
-| Odoo Partners | Track competitor pricing and market share |
-| Investors | Estimate module revenue before acquisition |
-| Product Managers | Validate new module ideas with real market data |
 
 ## Input
 
 | Field | Type | Default | Description |
 |-------|------|---------|-------------|
 | `searchKeyword` | string | `""` | Search for specific apps |
-| `odooVersion` | enum | All | Filter by Odoo version (10.0–19.0) |
-| `category` | enum | All | Filter by category (18 categories) |
+| `odooVersion` | enum | All | Filter by version (10.0-19.0) |
+| `category` | enum | All | 18 categories (Accounting, eCommerce, etc.) |
 | `filterType` | enum | All | Free, Paid, or All |
-| `freeAppsOnly` | boolean | `false` | Override: show only free apps (ignores filterType) |
-| `authorSearch` | string | `""` | Filter by developer/author name |
-| `sortBy` | enum | — | Sort order: `downloads`, `revenue`, or `rating` |
-| `maxItems` | integer | `500` | Max apps to scrape (max 5000) |
+| `freeAppsOnly` | boolean | `false` | Show only free apps |
+| `authorSearch` | string | `""` | Filter by developer name |
+| `sortBy` | enum | — | `downloads`, `revenue`, or `rating` |
+| `maxItems` | integer | `500` | Max apps (max 5000) |
 | `scrapeDetails` | boolean | `true` | Visit detail pages for richer data |
+| **`enableVersionComparison`** (new) | boolean | `false` | Compare app data across supported Odoo versions |
 
 ## Output
 
@@ -56,20 +47,25 @@ Each record:
 | `currency` | string | "EUR" |
 | `purchases` | integer | 2301 |
 | `estimatedRevenue` | number | 1070103.06 |
-| `rating` | number | 4.8 |
-| `ratingCount` | integer | 270 |
+| `rating` / `ratingCount` | number | 4.8 / 270 |
 | `latestVersion` | string | "17.0" |
 | `supportedVersions` | array | ["16.0","17.0","18.0"] |
-| `license` | string | "OPL-1" |
-| `linesOfCode` | integer | 14329 |
-| `summary` | string | "Shopify Odoo Connector" |
-| `appUrl` | string | "https://apps.odoo.com/..." |
+| `screenshots` | array | URL list |
+| `reviews` | array | Author, date, rating, text |
+| `dependencies` | array | Module dependencies |
+| `lastUpdated` / `createdOn` | string | Date strings |
+| **`versionComparison`** (new) | object | `{ "16.0": { price, screenshots, dependencies }, "18.0": {...} }` |
+| `versionAdoptionPercent` | object | Adoption distribution |
 
-Plus a `summary` entry with aggregate stats (total, avg price, estimated total revenue).
+Plus a `summary` entry with aggregate stats, category breakdown, top authors ranking, and version adoption trends.
+
+---
 
 ## Pricing
 
-**$0.01 per 1,000 results.** One result = one app record. Lightweight Cheerio scraper keeps compute costs minimal.
+**$0.05 per 1,000 results.** One result = one app record. Lightweight Cheerio scraper keeps compute costs minimal.
+
+---
 
 ## Quick Start
 
@@ -79,33 +75,24 @@ curl -X POST https://api.apify.com/v2/acts/foxpink~odoo-apps-market-intelligence
   -d '{
     "searchKeyword": "payment",
     "odooVersion": "18.0",
-    "filterType": "Paid",
-    "freeAppsOnly": false,
-    "authorSearch": "VentorTech",
     "sortBy": "revenue",
     "maxItems": 100,
-    "scrapeDetails": true
+    "scrapeDetails": true,
+    "enableVersionComparison": true
   }' \
   "https://api.apify.com/v2/acts/foxpink~odoo-apps-market-intelligence/runs?token=YOUR_API_TOKEN"
 ```
 
+---
+
+## Competitive Landscape
+
+Odoo Market Intel is the **only** Odoo Apps Store scraper on the Apify Marketplace. Zero competition — premium pricing justified by monopoly position and B2B enterprise use case.
+
+---
+
 ## Compatibility
 
 - 100% Node.js (18+)
-- No browser, no headless, no DOM
 - CheerioCrawler — fast, low memory
-- ESM (ECMAScript Modules)
-
-## MCP / AI Agent Usage
-
-```json
-{
-  "mcpServers": {
-    "apify": {
-      "command": "npx",
-      "args": ["-y", "@apify/mcp-server"],
-      "env": { "APIFY_TOKEN": "YOUR_API_TOKEN" }
-    }
-  }
-}
-```
+- No browser, no headless, no DOM
