@@ -63,7 +63,7 @@ Plus a `summary` entry with aggregate stats, category breakdown, top authors ran
 
 ## Pricing
 
-**$0.05 per 1,000 results.** One result = one app record. Lightweight Cheerio scraper keeps compute costs minimal.
+**$0.01 per 1,000 results.** One result = one app record. Lightweight Cheerio scraper keeps compute costs minimal.
 
 ---
 
@@ -91,7 +91,7 @@ Odoo Market Intel is the **only** Odoo Apps Store scraper on the Apify Marketpla
 
 | vs. Competitor | Their Price | Our Price | Advantage |
 |----------------|-------------|-----------|-----------|
-| Any Odoo scraper | **None exist** | **$0.05/1k** | **Monopoly** |
+| Any Odoo scraper | **None exist** | **$0.01/1k** | **Monopoly** |
 
 **Unique features:** Version comparison across Odoo 15-18, estimated revenue calculation, competitor matrix, author ranking, 18 categories.
 
