@@ -89,6 +89,26 @@ curl -X POST https://api.apify.com/v2/acts/foxpink~odoo-apps-market-intelligence
 
 Odoo Market Intel is the **only** Odoo Apps Store scraper on the Apify Marketplace. Zero competition — premium pricing justified by monopoly position and B2B enterprise use case.
 
+| vs. Competitor | Their Price | Our Price | Advantage |
+|----------------|-------------|-----------|-----------|
+| Any Odoo scraper | **None exist** | **$0.05/1k** | **Monopoly** |
+
+**Unique features:** Version comparison across Odoo 15-18, estimated revenue calculation, competitor matrix, author ranking, 18 categories.
+
+---
+
+## FoxPink Studio Ecosystem
+
+Combine with other FoxPink actors for a complete data pipeline:
+
+| Actor | Purpose | Price |
+|-------|---------|-------|
+| [Email Enricher+](https://apify.com/foxpink/email-enricher-plus) | Email verification & spam trap detection | $0.01/1k |
+| [Shopify Hidden API Spy](https://apify.com/foxpink/shopify-hidden-api-spy) | Zero-DOM Shopify product intelligence | $0.01/1k |
+| [RAG Markdown Chunker](https://apify.com/foxpink/apify-rag-markdown-chunker) | HTML→MD→Chunk→Embed pipeline | $0.01/1k |
+
+**Workflow example:** Odoo → find top-selling modules → Email → enrich module authors' contacts.
+
 ---
 
 ## Compatibility
